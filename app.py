@@ -21,20 +21,24 @@ class Predict(Resource):
         
         for val in data.values():
             params.append(val)
-        print(params)
         if not os.path.isfile('models/trained.model'):
             model.fit()
         else:
-            prediction =  model.predict(params)
-            print(prediction)
+            prediction, proba =  model.predict(params)
+            proba = round(proba.flatten().max()*100,2)
+            print(data)
             if prediction == 0:
-                return jsonify( {'Input': data,'Prediction: ': 'NO HEART DISEASE'})
+                return jsonify( {'input': data,
+                                 'prediction': 'No',
+                                 'probability':proba})
                 print(prediction)
             else:
-                return jsonify({'Input': data, 'Prediction': 'YOU HAVE HEART DISEASE'})
+                return jsonify({'input': data, 
+                                'prediction': 'Yes',
+                                'probability':proba})
                 print(prediction)
                 
-api.add_resource(Predict, '/')
+api.add_resource(Predict, '/testapi')
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -6,6 +6,7 @@ import joblib
 from flask import Flask, request, jsonify
 from flask_restful import Api, Resource, reqparse, abort
 from ModelBuilder.ModelBuilder import ModelBuilder
+from flask_cors import CORS
 
 app = Flask(__name__)
 api = Api(app)
@@ -38,7 +39,7 @@ class Predict(Resource):
                                 'probability':proba})
                 print(prediction)
                 
-api.add_resource(Predict, '/testapi')
+CORS(api.add_resource(Predict, '/testapi'))
 
 if __name__ == '__main__':
     app.run(debug=True)

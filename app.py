@@ -9,6 +9,7 @@ from ModelBuilder.ModelBuilder import ModelBuilder
 from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 api = Api(app)
 
 
@@ -39,7 +40,7 @@ class Predict(Resource):
                                 'probability':proba})
                 print(prediction)
                 
-CORS(api.add_resource(Predict, '/testapi'))
+api.add_resource(Predict, '/testapi')
 
 if __name__ == '__main__':
     app.run(debug=True)
